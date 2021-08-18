@@ -1,109 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <style type="text/css">
-            table{
-                width: 800px;
-                margin: auto;
-                text-align: center;
-            }
-            tr {
-                border: 1px solid;
-            }
-            th {
-                border: 1px solid;
-            }
-            td {
-                border: 1px solid;
-            }
-            h1{
-                text-align: center;
-                color: red;
-            }
-            #button{
-                margin: 2px;
-                margin-right: 10px;
-                float: right;
-            }
-        </style>
-    </head>
-    <body>
-        <?php 
-            //Kết nối databse
-            include 'connect.php';
-            
-            
-            //Viết câu SQL lấy tất cả dữ liệu trong bảng players
-            $sql = "SELECT * FROM `qlct` ORDER BY `id`";
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
-            //Chạy câu SQL
-            $result = $con->query($sql);
-            //thu var_dump($result)
-            //if co data thi num_rows > 0, num_rows =0
+</head>
+<body>
+    <?php 
+        include 'connect.php';
 
+        $sql = "SELECT * FROM `qlct` ORDER BY `id`";
 
-            $data = [];
-            if ($result->num_rows > 0) {
+        $result = $con->query($sql);
 
-                //Gắn dữ liệu lấy được vào mảng $data
-                while ($row = $result->fetch_assoc()) {
-                    $data[] = $row;
-                }
+        $val = [];
+
+        if ($result->num_rows >0) {
+            while ($row = $result->fetch_assoc()) {
+                $val[] = $row;
             }
-
-            $html = '';
-            foreach ($data as $value) {
-                $html .= '
-                <tr role="row">
-                    <td>'.$value['id'].'</td>
-                    <td>'.$value['name'].'</td>
-                    <td>'.$value['age'].'</td>
-                    <td>'.$value['quoctich'].'</td>
-                    <td>'.$value['vitri'].'</td>
-                    <td>'.$value['luong'].' $</td>
-                    <td><a href="edit.php?id='.$value['id'].'">Edit</a></td>
-                    <td><a href="delete.php?id='.$value['id'].'"> Delete</a></td>
-                </tr>';
-            }
-        ?>
-        <table id="datatable" style="border: 1px solid">
-            <h1>Quản lý cầu thủ</h1>
+        }
+    ?>
+    <div class="table is-striped">
+        <table class="table">
+        <div class="content">
+            <h1 style="color: red;">Quản lý cầu thủ</h1>
+        </div>
             <a href="Thêm"></a>
             <thead>
-                <tr role="row">
+                <tr>
                     <th>ID</th>
                     <th>Tên cầu thủ</th>
                     <th>Tuổi</th>
                     <th>Quốc tịch</th>
                     <th>Vị trí</th>
                     <th>Lương</th>
-                    <th style="width: 7%;">Edit</th>
-                    <th style="width: 10%;">>Delete</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr role="row">
-                    <td>1</td>
-                    <td>Lionel Messi</td>
-                    <td>30</td>
-                    <td>Argentina</td>
-                    <td>Tiền Đạo</td>
-                    <td>230000 $</td>
-                    <td><a href="#">Edit</a></td>
-                    <td><a href="#"> Delete</a></td>
-                </tr> -->
-                <?php  
-                    echo $html;
-                ?>
+                <?php foreach ($val as $va) { ?>
+                    <tr>
+                        <td><?php echo $va['id'] ?></td>
+                        <td><?php echo $va['name'] ?></td>
+                        <td><?php echo $va['age'] ?></td>
+                        <td><?php echo $va['quoctich'] ?></td>
+                        <td><?php echo $va['vitri'] ?></td>
+                        <td><?php echo $va['luong'] ?></td>
+                        <td><a href="edit.php?id=<?php echo $va['id'] ?>">Edit</a></td>
+                        <td><a href="delete.php?id=<?php echo $va['id']?>"><button class="delete is-medium"></button></a></td>
+                    </tr>
+
+                <?php }; ?>
             </tbody>
-            <tfoot>
                 <tr>
-                    <td colspan="8">
-                        <a href="add.php"><button id="button">Thêm cầu thủ</button></a>
-                    </td>
+                    <td><a href="add.php"><button class="button is-info">Thêm mới</button></a></td>
+
                 </tr>
-            </tfoot>
         </table>
-    </body>
+    </div>
+</body>
 </html>
