@@ -24,8 +24,8 @@
             $error_age = "<span style='color:red;'>Lỗi: Tuổi bắt buộc phải nhập.</span>";
             $check = 0;
         }else{
-            if (!preg_match("/^[0-9 ]*$/",$_POST["age"])) {
-                $error_age = "<span style='color:red;'>Lỗi: Tuổi chỉ chấp nhận số</span>";
+            if (!preg_match("/^[0-9]{2}$/",$_POST["age"])) {
+                $error_age = "<span style='color:red;'>Lỗi: Tuổi chỉ chấp nhận số từ 2 kí tự</span>";
                 $check = 0;
             }
 
@@ -52,7 +52,7 @@
             $error_luong = "<span style='color:red;'>Lỗi: Vui lòng nhập Lương !!!.</span>";
             $check = 0;
         }else{
-            if (!preg_match("/^[0-9 ]*$/",$_POST["luong"])) {
+            if (!preg_match("/^[0-9]{3,5}$/",$_POST["luong"])) {
               $error_luong = "<span style='color:red;'>Lỗi: Vui lòng nhập lại lương !!.</span>";
               $check = 0;
             }
